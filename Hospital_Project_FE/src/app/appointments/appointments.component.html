@@ -1,0 +1,17 @@
+<h2 class="text-danger text-center m-2 p-2"><b>APPOINTMENTS</b></h2>
+<div class="offset-1 row">
+<div class="m-2 p-2" *ngFor="let item of AppointmentList" >
+    <div class="card border-primary mb-3" style="max-width: 18rem;">
+        <div class="card-header text-primary">{{item.appointmentDate|date}} : {{item.time}}</div>
+        <div class="card-body text-dark">
+          <h6 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h6>
+          <h6 class="card-title"><b>Address :- </b>{{item.address}}</h6>
+          <h6 class="card-title"><b>Department :- </b>{{item.department}}</h6>
+          <h6 class="card-title"><b>Doctor :- </b>{{item.doctor}}</h6>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-outline-success">ADD PATIENT</button>
+        </div>
+      </div>    
+</div>
+</div>
