@@ -15,6 +15,8 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule,MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
 import { PatientComponent } from './patient/patient.component';
+import { MyRecordsComponent } from './my-records/my-records.component';
+import { NewPatientComponent } from './new-patient/new-patient.component';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { PatientComponent } from './patient/patient.component';
     MyAppointmentComponent,
     AppointmentsComponent,
     PatientComponent,
+    MyRecordsComponent,
+    NewPatientComponent,
   ],
   imports: [
     BrowserModule,

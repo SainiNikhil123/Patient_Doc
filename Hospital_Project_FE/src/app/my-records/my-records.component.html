@@ -1,5 +1,5 @@
-<h1 class="text-center text-success p-2 m-2"><b>PATIENT LIST</b></h1>
-<div class="p-1 m-1" *ngFor="let patient of PatientList">
+<h1 class="text-center text-success p-2 m-2"><b>MY RECORDS</b></h1>
+<div class="p-1 m-1" *ngFor="let patient of MYPatientList">
     <div class="card border-primary mb-3 p-1 m-1">
         <div class="card-header">
             <div class="row">
@@ -41,12 +41,12 @@
             <div class="modal-body" *ngFor="let comment of comments">
                 <div>{{comment}}</div>
             </div>
-            <div class="p-2 m-2">
+            <!-- <div class="p-2 m-2">
                 <input [(ngModel)]="newComments.comments" name="comment" type="text" class="form-control" placeholder="Add Comment Here" >
-            </div>
+            </div> -->
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button (click)="AddComment()" type="button" class="btn btn-primary" data-dismiss="modal">Add Comment</button>
+              <!-- <button (click)="AddComment()" type="button" class="btn btn-primary" data-dismiss="modal">Add Comment</button> -->
             </div>
           </div>
         </div>

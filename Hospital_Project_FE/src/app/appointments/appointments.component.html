@@ -4,10 +4,10 @@
     <div class="card border-primary mb-3" style="max-width: 18rem;">
         <div class="card-header text-primary">{{item.appointmentDate|date}} : {{item.time}}</div>
         <div class="card-body text-dark">
-          <h6 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h6>
-          <h6 class="card-title"><b>Address :- </b>{{item.address}}</h6>
-          <h6 class="card-title"><b>Department :- </b>{{item.department}}</h6>
-          <h6 class="card-title"><b>Doctor :- </b>{{item.doctor}}</h6>
+          <h4 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h4>
+          <h4 class="card-title"><b>Address :- </b>{{item.address}}</h4>
+          <h4 class="card-title"><b>Department :- </b>{{item.department}}</h4>
+          <h4 class="card-title"><b>Doctor :- </b>{{item.doctor}}</h4>
         </div>
         <div class="card-footer">
             <button (click)="AddPatients(item)" class="btn btn-outline-success">ADD PATIENT</button>

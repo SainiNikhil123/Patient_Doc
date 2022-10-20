@@ -29,8 +29,8 @@ namespace Doc_Patient_Project.Controllers
         public IActionResult GetUser()
       {
             var UserList = _UserRepository.GetUser();
-            //var AdminUser = UserList.FirstOrDefault(u => u.Role == SD.Role_Admin);
-            //UserList.Remove(AdminUser);
+            var AdminUser = UserList.FirstOrDefault(u => u.Role == "Admin");
+            UserList.Remove(AdminUser);
             if (UserList == null) return BadRequest();
             return Ok(UserList);
         }

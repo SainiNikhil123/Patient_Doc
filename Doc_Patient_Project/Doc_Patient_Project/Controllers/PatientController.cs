@@ -26,6 +26,13 @@ namespace Doc_Patient_Project.Controllers
             if (Patients == null) return BadRequest();
             return Ok(Patients);
         }
+        [HttpGet("Id")]
+        public IActionResult GetPatientByUserId(string Id)
+        {
+            var patients = _context.Patient.GetPatientByUID(Id);
+            if (patients == null) return BadRequest();
+            return Ok(patients);
+        }
 
         [HttpGet("comment/{id}")]
         public IActionResult GetComments(int id)
@@ -41,6 +48,18 @@ namespace Doc_Patient_Project.Controllers
             var newPatient = _context.Patient.NewPatient(patient);
             if (newPatient == false) return BadRequest();
             return Ok();
+        }
+
+        [HttpPost("comment")]
+        public IActionResult AddComments([FromBody]CommentDto comment)
+        {
+            if(comment != null && ModelState.IsValid)
+            {
+                var newComments = _context.Patient.AddComment(comment);
+                if (newComments == false) return BadRequest();
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

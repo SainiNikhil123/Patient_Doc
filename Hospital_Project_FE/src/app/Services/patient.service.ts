@@ -1,3 +1,4 @@
+import { Comment } from './../Models/comment';
 import { Patient } from './../Models/patient';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient } from '@angular/common/http';
@@ -20,5 +21,20 @@ export class PatientService {
   postPatient(newPatient:Patient):Observable<Patient>
   {
     return this.httpClient.post<Patient>(this.BaseUrl,newPatient)
+  }
+
+  getComments(id:number):Observable<any>
+  {
+    return this.httpClient.get<any>(this.BaseUrl+"comment/"+id)
+  }
+
+  addComments(newComment:Comment):Observable<Comment>
+  {
+    return this.httpClient.post<Comment>(this.BaseUrl+"comment/",newComment)
+  }
+
+  getPatientByUserId(id:any):Observable<any>
+  {
+    return this.httpClient.get<any>(this.BaseUrl+"Id?Id="+id)
   }
 }

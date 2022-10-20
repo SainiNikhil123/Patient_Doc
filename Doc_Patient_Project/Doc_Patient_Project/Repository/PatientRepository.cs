@@ -36,8 +36,11 @@ namespace Doc_Patient_Project.Repository
             var PatientList = (from p in _context.Patients
                                join d in _context.Doctors
                                on p.DoctorId equals d.Id
+                               join c in _context.Doctors
+                               on p.Refer equals c.Id
                                join dep in _context.Departments
                                on p.DepartmentId equals dep.Id
+                               
                                select new PatientDto()
                                {
                                    Id = p.Id,
@@ -50,7 +53,7 @@ namespace Doc_Patient_Project.Repository
                                    DepartmentId = p.DepartmentId,
                                    Department = dep.Department1,
                                    Refer = p.Refer,
-                                   ReferName = d.Docname,
+                                   ReferName = c.Docname,
                                    Status = p.Status
                                }).ToList();
 
@@ -121,7 +124,64 @@ namespace Doc_Patient_Project.Repository
             }
 
         }
-    }
+        public bool AddComment(CommentDto comment)
+        {
+            try
+            {
+                Comment com = new Comment()
+                {
+                    Comments = comment.Comments
+                };
+                _context.Comments.Add(com);
+                _context.SaveChanges();
 
-    
+                PatientComment patcom = new PatientComment()
+                {
+                    PatientId = comment.PatientId,
+                    CommentId = com.Id
+                };
+                _context.PatientComments.Add(patcom);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+        }
+
+        public List<PatientDto> GetPatientByUID(string Id)
+        {
+            var PatientList = (from p in _context.Patients
+                               join d in _context.Doctors
+                               on p.DoctorId equals d.Id
+                               join c in _context.Doctors
+                               on p.Refer equals c.Id
+                               join dep in _context.Departments
+                               on p.DepartmentId equals dep.Id
+                               join up in _context.UserPatients
+                               on p.Id equals up.PatientId
+                               where up.UserId == Id
+                               select new PatientDto()
+                               {
+                                   Id = p.Id,
+                                   AppointmentId = p.AppointmentId,
+                                   Name = p.Name,
+                                   Address = p.Address,
+                                   PhoneNumber = p.PhoneNumber,
+                                   DoctorId = p.DoctorId,
+                                   Doctor = d.Docname,
+                                   DepartmentId = p.DepartmentId,
+                                   Department = dep.Department1,
+                                   Refer = p.Refer,
+                                   ReferName = c.Docname,
+                                   Status = p.Status
+                               }).ToList();
+
+            if (PatientList == null) return null;
+
+            return PatientList;
+        }
+    }
 }
