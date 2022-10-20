@@ -11,13 +11,17 @@
           <a class="nav-link" routerLink="/user" >User List</a>
       </li>  
       <li class="nav-item">
+        <a class="nav-link" routerLink="patient" >Patient</a>
+      </li> 
+      <li class="nav-item">
         <a class="nav-link" routerLink="appointment" >Appointments</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="myappointment" >My Appointments</a>
       </li>
-        
-     
+      <li class="nav-item">
+        <a class="nav-link" routerLink="newappointment" >New Appointments</a>
+      </li> 
     </ul>
      <div *ngIf="isAuthorized()==true">
      <a class="text-danger">{{this.UserName}}</a> 

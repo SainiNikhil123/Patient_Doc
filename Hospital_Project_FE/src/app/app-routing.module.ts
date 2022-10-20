@@ -1,3 +1,4 @@
+import { PatientComponent } from './patient/patient.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 
 import { RegisterComponent } from './register/register.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path:'appointment',component:AppointmentsComponent},
   {path:'myappointment',component:MyAppointmentComponent},
   {path:'newappointment',component:NewAppointmentComponent},
+  {path:'patient',component:PatientComponent},
 ];
 
 @NgModule({

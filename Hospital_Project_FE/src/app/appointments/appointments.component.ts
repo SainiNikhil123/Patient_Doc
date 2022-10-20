@@ -29,4 +29,9 @@ export class AppointmentsComponent implements OnInit {
     )
   }
 
+  AddPatients(appointment:any)
+  {
+    
+  }
+
 }

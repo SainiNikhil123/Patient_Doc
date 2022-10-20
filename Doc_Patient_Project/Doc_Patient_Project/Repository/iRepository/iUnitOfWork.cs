@@ -12,6 +12,7 @@ namespace Doc_Patient_Project.Repository.iRepository
         IDesignationRepository Designation { get; }
         IAppointmentRepository Appointment { get; }
         IPatientRepository Patient { get; }
+        ITimeRepository Time { get; }
         void Save();
     }
 }

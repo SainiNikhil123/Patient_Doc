@@ -1,4 +1,5 @@
 export class Appointment {
+    userId:any;
     id:number;
     patientName:string;
     phoneNumber:string;
@@ -8,9 +9,11 @@ export class Appointment {
     doctorId:number;
     doctor:string;
     appointmentDate:any;
-    appointmentTime:number;
+    appointmentTimes:number;
     time:string;
+
     constructor(){
+        this.userId="";
         this.id=0;
         this.patientName="";
         this.phoneNumber="";
@@ -20,7 +23,7 @@ export class Appointment {
         this.doctorId=0;
         this.doctor="";
         this.appointmentDate="";
-        this.appointmentTime=0;
+        this.appointmentTimes=0;
         this.time="";
     }
 }

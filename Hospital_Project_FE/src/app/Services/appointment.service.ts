@@ -1,3 +1,4 @@
+import { Appointment } from './../Models/appointment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
@@ -19,5 +20,15 @@ export class AppointmentService {
   getAppointmentById(id:any):Observable<any>
   {
     return this.httpClient.get<any>(this.BaseUrl+ "user/" + id)
+  }
+
+  getTime():Observable<any>
+  {
+    return this.httpClient.get<any>("https://localhost:44346/api/Time");
+  }
+
+  addAppointments(newApp:Appointment):Observable<Appointment>
+  {
+    return this.httpClient.post<Appointment>(this.BaseUrl,newApp);
   }
 }

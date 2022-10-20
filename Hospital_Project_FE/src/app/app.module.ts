@@ -12,6 +12,10 @@ import { NewAppointmentComponent } from './new-appointment/new-appointment.compo
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule,MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
+import { PatientComponent } from './patient/patient.component';
+
 
 @NgModule({
   declarations: [
@@ -21,15 +25,18 @@ import { AppointmentsComponent } from './appointments/appointments.component';
     LoginComponent,
     NewAppointmentComponent,
     MyAppointmentComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    PatientComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    BrowserAnimationsModule,
+    CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule,
   ],
-  providers: [],
+  providers: [MaskedDateTimeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

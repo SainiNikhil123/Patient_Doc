@@ -18,6 +18,7 @@ namespace Doc_Patient_Project.Repository
             Designation = new DesignationRepository(_context);
             Appointment = new AppointmentRepository(_context);
             Patient = new PatientRepository(_context);
+            Time = new TimeRepository(_context);
         }
 
         public IDoctorRepository Doctor { get; private set; }
@@ -29,6 +30,8 @@ namespace Doc_Patient_Project.Repository
         public IAppointmentRepository Appointment { get; private set; }
 
         public IPatientRepository Patient { get; private set; }
+
+        public ITimeRepository Time { get; private set; }
 
         public void Save()
         {

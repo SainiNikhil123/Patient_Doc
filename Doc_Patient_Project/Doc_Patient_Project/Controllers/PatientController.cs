@@ -27,7 +27,7 @@ namespace Doc_Patient_Project.Controllers
             return Ok(Patients);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("comment/{id}")]
         public IActionResult GetComments(int id)
         {
             var comments = _context.Patient.GetCommentByID(id);
