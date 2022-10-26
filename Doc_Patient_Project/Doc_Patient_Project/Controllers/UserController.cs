@@ -1,6 +1,7 @@
 ﻿using Doc_Patient_Project.Models;
 using Doc_Patient_Project.Models.DTO;
 using Doc_Patient_Project.Repository.iRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Admin)]
         public IActionResult GetUser()
       {
             var UserList = _UserRepository.GetUser();

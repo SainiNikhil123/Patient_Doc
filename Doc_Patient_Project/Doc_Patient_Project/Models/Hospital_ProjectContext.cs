@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -26,6 +25,7 @@ namespace Doc_Patient_Project.Models
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DoctorDesignation> DoctorDesignations { get; set; }
+        public virtual DbSet<DoctorRating> DoctorRatings { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PatientComment> PatientComments { get; set; }
         public virtual DbSet<UserPatient> UserPatients { get; set; }
@@ -91,7 +91,7 @@ namespace Doc_Patient_Project.Models
 
                 entity.Property(e => e.Name).IsRequired();
             });
-           
+
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.ToTable("COMMENTS");
@@ -146,6 +146,21 @@ namespace Doc_Patient_Project.Models
                     .HasConstraintName("FK__DoctorDes__Docto__2739D489");
             });
 
+            modelBuilder.Entity<DoctorRating>(entity =>
+            {
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.DoctorRatings)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__DoctorRat__Docto__625A9A57");
+
+                entity.HasOne(d => d.Patient)
+                    .WithMany(p => p.DoctorRatings)
+                    .HasForeignKey(d => d.PatientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__DoctorRat__Patie__634EBE90");
+            });
+
             modelBuilder.Entity<Patient>(entity =>
             {
                 entity.ToTable("Patient");
@@ -159,8 +174,7 @@ namespace Doc_Patient_Project.Models
                 entity.HasOne(d => d.Appointment)
                     .WithMany(p => p.Patients)
                     .HasForeignKey(d => d.AppointmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Patient__Appoint__4D5F7D71");
+                    .HasConstraintName("FK__Patient__Appoint__6442E2C9");
 
                 entity.HasOne(d => d.Department)
                     .WithMany(p => p.Patients)

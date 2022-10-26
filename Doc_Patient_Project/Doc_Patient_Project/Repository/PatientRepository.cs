@@ -36,11 +36,13 @@ namespace Doc_Patient_Project.Repository
             var PatientList = (from p in _context.Patients
                                join d in _context.Doctors
                                on p.DoctorId equals d.Id
-                               join c in _context.Doctors
-                               on p.Refer equals c.Id
                                join dep in _context.Departments
                                on p.DepartmentId equals dep.Id
-                               
+                               join pu in _context.UserPatients
+                               on p.Id equals pu.PatientId 
+                               //join c in _context.Doctors
+                               //on p.Refer equals c.Id
+                              // where p.Refer == d.Id || p.Refer == null
                                select new PatientDto()
                                {
                                    Id = p.Id,
@@ -52,9 +54,11 @@ namespace Doc_Patient_Project.Repository
                                    Doctor = d.Docname,
                                    DepartmentId = p.DepartmentId,
                                    Department = dep.Department1,
-                                   Refer = p.Refer,
-                                   ReferName = c.Docname,
-                                   Status = p.Status
+                                   //Refer = p.Refer == null ? 0 : p.Refer,
+                                   //ReferName = p.Refer == null ? "NOT REFFERD" : d.Docname,
+                                   Status = p.Status,
+                                   UserId = pu.UserId,
+                                   Doctors = p.Refer != null ? _context.Doctors.Where(x=>x.Id == p.Refer).FirstOrDefault(): null
                                }).ToList();
 
             if (PatientList == null) return null;
@@ -66,47 +70,47 @@ namespace Doc_Patient_Project.Repository
         {
             try
             {
-                var user = _context.AppointmentRegistrations.FirstOrDefault(x => x.Id == patient.AppointmentId);
-                patient.UserId = user.UserId;
+                //var user = _context.AppointmentRegistrations.FirstOrDefault(x => x.Id == patient.AppointmentId);
+                //patient.UserId = user.UserId;
 
                 Patient newPatient = new Patient()
                 {
-                    AppointmentId = patient.AppointmentId,
+                    AppointmentId = patient.AppointmentId == 0 ? null : patient.AppointmentId,
                     Name = patient.Name,
                     Address = patient.Address,
                     PhoneNumber = patient.PhoneNumber,
                     DepartmentId = patient.DepartmentId,
                     DoctorId = patient.DoctorId,
-                    Refer = patient.Refer,
+                    Refer = patient.Refer == 0 ? null : patient.Refer,
                     Status = patient.Status
                 };
                 _context.Patients.Add(newPatient);
                 _context.SaveChanges();
 
-                List<Comment> CommentList = new List<Comment>();
-                foreach (var item in patient.Comments)
-                {
-                    Comment comments = new Comment()
-                    {
-                        Comments = item
-                    };
-                    CommentList.Add(comments);
-                }
-                _context.Comments.AddRange(CommentList);
-                _context.SaveChanges();
+                //List<Comment> CommentList = new List<Comment>();
+                //foreach (var item in patient.Comments)
+                //{
+                //    Comment comments = new Comment()
+                //    {
+                //        Comments = item
+                //    };
+                //    CommentList.Add(comments);
+                //}
+                //_context.Comments.AddRange(CommentList);
+                //_context.SaveChanges();
 
-                List<PatientComment> patientCommentList = new List<PatientComment>();
-                foreach (var item in CommentList)
-                {
-                    PatientComment patientComment = new PatientComment()
-                    {
-                        PatientId = newPatient.Id,
-                        CommentId = item.Id
-                    };
-                    patientCommentList.Add(patientComment);
-                }
-                _context.PatientComments.AddRange(patientCommentList);
-                _context.SaveChanges();
+                //List<PatientComment> patientCommentList = new List<PatientComment>();
+                //foreach (var item in CommentList)
+                //{
+                //    PatientComment patientComment = new PatientComment()
+                //    {
+                //        PatientId = newPatient.Id,
+                //        CommentId = item.Id
+                //    };
+                //    patientCommentList.Add(patientComment);
+                //}
+                //_context.PatientComments.AddRange(patientCommentList);
+                //_context.SaveChanges();
 
                 UserPatient userPatient = new UserPatient()
                 {
@@ -156,13 +160,11 @@ namespace Doc_Patient_Project.Repository
             var PatientList = (from p in _context.Patients
                                join d in _context.Doctors
                                on p.DoctorId equals d.Id
-                               join c in _context.Doctors
-                               on p.Refer equals c.Id
                                join dep in _context.Departments
                                on p.DepartmentId equals dep.Id
-                               join up in _context.UserPatients
-                               on p.Id equals up.PatientId
-                               where up.UserId == Id
+                               join pu in _context.UserPatients
+                               on p.Id equals pu.PatientId
+                               where pu.UserId == Id
                                select new PatientDto()
                                {
                                    Id = p.Id,
@@ -174,9 +176,11 @@ namespace Doc_Patient_Project.Repository
                                    Doctor = d.Docname,
                                    DepartmentId = p.DepartmentId,
                                    Department = dep.Department1,
-                                   Refer = p.Refer,
-                                   ReferName = c.Docname,
-                                   Status = p.Status
+                                   //Refer = p.Refer == null ? 0 : p.Refer,
+                                   //ReferName = p.Refer == null ? "NOT REFFERD" : d.Docname,
+                                   Status = p.Status,
+                                   UserId = pu.UserId,
+                                   Doctors = p.Refer != null ? _context.Doctors.Where(x => x.Id == p.Refer).FirstOrDefault() : null
                                }).ToList();
 
             if (PatientList == null) return null;

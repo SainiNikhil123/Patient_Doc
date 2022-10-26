@@ -1,12 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { JwtModule } from "@auth0/angular-jwt";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { NewAppointmentComponent } from './new-appointment/new-appointment.component';
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
@@ -17,7 +17,11 @@ import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModu
 import { PatientComponent } from './patient/patient.component';
 import { MyRecordsComponent } from './my-records/my-records.component';
 import { NewPatientComponent } from './new-patient/new-patient.component';
+import { AuthIntercepterService } from './Auth/auth-intercepter.service';
 
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
@@ -36,11 +40,22 @@ import { NewPatientComponent } from './new-patient/new-patient.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule,ReactiveFormsModule,
     BrowserAnimationsModule,
     CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule,
+    JwtModule.forRoot({
+      config:{
+        tokenGetter: tokenGetter    
+      }   
+    })
   ],
-  providers: [MaskedDateTimeService],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthIntercepterService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

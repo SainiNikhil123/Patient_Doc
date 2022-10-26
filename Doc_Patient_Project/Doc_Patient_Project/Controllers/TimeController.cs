@@ -1,4 +1,5 @@
 ﻿using Doc_Patient_Project.Repository.iRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,6 +20,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult getTime()
         {
             return Ok(_unitOfWork.Time.GetAll().ToList());

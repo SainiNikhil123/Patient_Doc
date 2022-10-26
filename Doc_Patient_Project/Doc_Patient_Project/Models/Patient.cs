@@ -9,12 +9,13 @@ namespace Doc_Patient_Project.Models
     {
         public Patient()
         {
+            DoctorRatings = new HashSet<DoctorRating>();
             PatientComments = new HashSet<PatientComment>();
             UserPatients = new HashSet<UserPatient>();
         }
 
         public int Id { get; set; }
-        public int AppointmentId { get; set; }
+        public int? AppointmentId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
@@ -27,6 +28,7 @@ namespace Doc_Patient_Project.Models
         public virtual Department Department { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Doctor ReferNavigation { get; set; }
+        public virtual ICollection<DoctorRating> DoctorRatings { get; set; }
         public virtual ICollection<PatientComment> PatientComments { get; set; }
         public virtual ICollection<UserPatient> UserPatients { get; set; }
     }

@@ -1,3 +1,5 @@
+import { AppComponent } from './app.component';
+import { NewPatientComponent } from './new-patient/new-patient.component';
 import { MyRecordsComponent } from './my-records/my-records.component';
 import { PatientComponent } from './patient/patient.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
@@ -9,16 +11,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
 import { NewAppointmentComponent } from './new-appointment/new-appointment.component';
+import { AuthGardService } from './Auth/auth-gard.service';
 
 const routes: Routes = [
-  {path:'user',component:UserComponent},
+  //{path:'',component:AppComponent},
+  {path:'user',component:UserComponent,canActivate:[AuthGardService]},
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
-  {path:'appointment',component:AppointmentsComponent},
-  {path:'myappointment',component:MyAppointmentComponent},
-  {path:'newappointment',component:NewAppointmentComponent},
-  {path:'patient',component:PatientComponent},
-  {path:'myrecords',component:MyRecordsComponent}
+  {path:'appointment',component:AppointmentsComponent,canActivate:[AuthGardService]},
+  {path:'myappointment',component:MyAppointmentComponent,canActivate:[AuthGardService]},
+  {path:'newappointment',component:NewAppointmentComponent,canActivate:[AuthGardService]},
+  {path:'patient',component:PatientComponent,canActivate:[AuthGardService]},
+  {path:'myrecords',component:MyRecordsComponent,canActivate:[AuthGardService]},
+  {path:'newpatient',component:NewPatientComponent,canActivate:[AuthGardService]},
 ];
 
 @NgModule({

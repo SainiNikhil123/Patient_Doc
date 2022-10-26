@@ -1,8 +1,11 @@
+import { DoctorService } from './../Services/doctor.service';
+import { HttpClient } from '@angular/common/http';
 import { RegisterComponent } from './../register/register.component';
 import { Patient } from './../Models/patient';
 import { PatientService } from './../Services/patient.service';
 import { Component, OnInit } from '@angular/core';
 import {Comment} from './../Models/comment';
+import { Doctor } from '../Models/doctor';
 
 @Component({
   selector: 'app-patient',
@@ -12,13 +15,17 @@ import {Comment} from './../Models/comment';
 export class PatientComponent implements OnInit {
 
   PatientList:Patient[]=[];
+  AllDoctors:Doctor[]=[];
+  DoctorsByDep:Doctor[]=[];
   comments:any[]=[]
   newComments:Comment = new Comment();
+  patient:Patient = new Patient();
 
-  constructor(private patientService:PatientService) { }
+  constructor(private doctorService:DoctorService,private patientService:PatientService) { }
 
   ngOnInit(): void {
     this.getAllPatient();
+    this.getAllDoc();
     //this.commentClick(0);
   }
 
@@ -63,4 +70,50 @@ export class PatientComponent implements OnInit {
     )
   }
 
+  role :any = localStorage.getItem("role")
+  doctorRole()
+{
+  if(this.role == "Doctor") return true;
+  return false;
+}
+
+getAllDoc()
+{
+  this.doctorService.getAllDoctors().subscribe(
+    (response)=>{
+      this.AllDoctors = response
+      console.log(response);
+    },
+    (error)=>{
+      console.log(error);
+    }
+  )
+}
+
+
+referClick(e:any)
+{
+  debugger;
+  this.patient = e;
+  this.DoctorsByDep = this.AllDoctors.filter(x=>x.departmentId == this.patient.departmentId);
+  console.log(this.DoctorsByDep);
+}
+
+onSelectDoc(e:any)
+{
+  this.patient.doctorId = e.target.value;
+  
+}
+
+onSubmit()
+{
+  this.patientService.postRefer(this.patient.id,this.patient.doctorId).subscribe(
+    (response)=>{
+      console.log(response);
+    },
+    (error)=>{
+      console.log(error);
+    }
+  )
+}
 }

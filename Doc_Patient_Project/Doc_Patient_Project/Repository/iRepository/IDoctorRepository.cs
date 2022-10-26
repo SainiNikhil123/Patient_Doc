@@ -12,6 +12,8 @@ namespace Doc_Patient_Project.Repository.iRepository
         IEnumerable<DoctorDto> GetAllDoctors();
         bool AddDoctor(DoctorDto doctor);
         bool UpdateDoctor(DoctorDto doctor);
+        int DocRating(int id);
+        bool AddRating(RatingDto rating);
 
     }
 }

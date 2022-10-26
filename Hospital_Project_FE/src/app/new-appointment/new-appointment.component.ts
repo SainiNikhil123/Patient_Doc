@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Appointment } from './../Models/appointment';
 import { Time } from './../Models/time';
 import { AppointmentService } from './../Services/appointment.service';
@@ -6,6 +7,7 @@ import { DoctorService } from './../Services/doctor.service';
 import { DepartmentService } from './../Services/department.service';
 import { Component, OnInit } from '@angular/core';
 import { Doctor } from '../Models/doctor';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-appointment',
@@ -20,8 +22,14 @@ export class NewAppointmentComponent implements OnInit {
   TimeList:Time[]=[];
   newAppointment:Appointment = new Appointment();
   date: string | number | Date | undefined;
+  Registrationform !: FormGroup;
+  //submitted:boolean=false;
+  //stars:number[] = [1,2,3,4,5];
+  //rating:number=0;
 
-  constructor(private departmentService: DepartmentService, private doctorService: DoctorService, private appointmentService: AppointmentService) { }
+  constructor(private fb:FormBuilder,private departmentService: DepartmentService, private doctorService: DoctorService, private appointmentService: AppointmentService, private router :Router) { 
+    this.CreateForm();
+  }
 
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
@@ -29,8 +37,35 @@ export class NewAppointmentComponent implements OnInit {
     this.getAllDoc();
     this.getTIme();
     this.onSelectDep(0);
+    this.onSelectDoc(0);
+    this.CreateForm();
+   
   }
 
+  CreateForm()
+  {
+    this.Registrationform = this.fb.group({
+      name: ['', Validators.required ],
+      phoneNumber: ['', Validators.required ],
+      Address: ['', Validators.required ],
+      Department:['', Validators.required ],
+      doctor:['', Validators.required ],
+  })
+
+  }
+
+  // onSubmit()
+  // {
+  //   this.submitted = true;
+  //   if(this.Registrationform.invalid){
+  //     return;
+  //   }
+    
+  // }
+
+  countStar(star:any){
+    console.log(star)
+  }
   addAppointment()
   {
     let id = localStorage.getItem("Id");
@@ -38,6 +73,7 @@ export class NewAppointmentComponent implements OnInit {
     this.appointmentService.addAppointments(this.newAppointment).subscribe(
       (response)=>{
         console.log(response);
+        this.router.navigate([""]);
       },
       (error)=>{
         console.log(error);
@@ -96,6 +132,16 @@ export class NewAppointmentComponent implements OnInit {
   onSelectDoc(e:any)
   {
     this.newAppointment.doctorId = e.target.value;
+    // this.doctorService.getRating(this.newAppointment.doctorId).subscribe(
+    //   (response)=>{
+    //     this.rating=response;
+    //     this.stars.length = this.rating
+    //     console.log(this.stars.length);
+    //   },
+    //   (error)=>{
+    //     console.log(error);
+    //   }
+    // )
   }
 
   onTimeSelect(e:any)

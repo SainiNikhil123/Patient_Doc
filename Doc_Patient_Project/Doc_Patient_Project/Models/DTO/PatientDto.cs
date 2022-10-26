@@ -8,7 +8,7 @@ namespace Doc_Patient_Project.Models.DTO
     public class PatientDto
     {
         public int Id { get; set; }
-        public int AppointmentId { get; set; }
+        public int? AppointmentId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
@@ -21,5 +21,6 @@ namespace Doc_Patient_Project.Models.DTO
         public int? Refer { get; set; }
         public string ReferName { get; set; }
         public string UserId { get; set; }
+        public Doctor Doctors { get; set; }
     }
 }

@@ -1,17 +1,97 @@
-<h2 class="text-danger text-center m-2 p-2"><b>APPOINTMENTS</b></h2>
+<h2 class="text-danger text-center m-2 p-2"><b>PATIENT</b></h2>
 <div class="offset-1 row">
-<div class="m-2 p-2" *ngFor="let item of AppointmentList" >
+  <div class="m-2 p-2" *ngFor="let item of AppointmentList">
     <div class="card border-primary mb-3" style="max-width: 18rem;">
-        <div class="card-header text-primary">{{item.appointmentDate|date}} : {{item.time}}</div>
-        <div class="card-body text-dark">
-          <h4 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h4>
-          <h4 class="card-title"><b>Address :- </b>{{item.address}}</h4>
-          <h4 class="card-title"><b>Department :- </b>{{item.department}}</h4>
-          <h4 class="card-title"><b>Doctor :- </b>{{item.doctor}}</h4>
-        </div>
-        <div class="card-footer">
-            <button (click)="AddPatients(item)" class="btn btn-outline-success">ADD PATIENT</button>
-        </div>
-      </div>    
+      <div class="card-header text-primary">{{item.appointmentDate|date}} : {{item.time}}</div>
+      <div class="card-body text-dark">
+        <h4 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h4>
+        <h4 class="card-title"><b>Address :- </b>{{item.address}}</h4>
+        <h4 class="card-title"><b>Department :- </b>{{item.department}}</h4>
+        <h4 class="card-title"><b>Doctor :- </b>{{item.doctor}}</h4>
+      </div>
+      <div class="card-footer">
+        <button (click)="AddPatients(item)" class="btn btn-outline-success" data-toggle="modal"
+          data-target="#saveModal">ADD PATIENT</button>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
+<form>
+  <div class="modal" role="dialog" id="saveModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <div class="modal-title text-success">
+            <h2><b>New Appointment</b></h2>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="txtName" class="col-sm-4">Patient Name</label>
+            <div class="col-sm-8">
+              <input [(ngModel)]="patient.name" type="text" id="txtName" placeholder="Patient Name" name="Name"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="txtAdd" class="col-sm-4">phone Number</label>
+            <div class="col-sm-8">
+              <input [(ngModel)]="patient.phoneNumber" type="text" id="txtAdd" placeholder="phone Number"
+                name="phone Number" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="txtnum" class="col-sm-4">Address</label>
+            <div class="col-sm-8">
+              <input [(ngModel)]="patient.address" type="text" id="txtnum" placeholder="Address" name="Address"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="txtdes" class="col-sm-4">Department</label>
+            <div class="col-sm-8">
+              <select (change)="onSelectDep($event)" [(ngModel)]="patient.departmentId" name="patient.departmentId" class="form-control">
+                <option value="">Select Department</option>
+                <option  value="{{Dep.id}}"   *ngFor="let Dep of DepartmentList">
+                  {{Dep.department1}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label for="txtdes" class="col-sm-4">Doctor</label>
+              <div class="col-sm-8">
+                <select (change)="onSelectDoc($event)" [(ngModel)]="patient.doctorId" name="patient.doctorId" class="form-control">
+                  <option value="">Select Doctor</option>
+                  <option value="{{Doc.id}}"  *ngFor="let Doc of DoctorsByDep">
+                    {{Doc.docname}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" (click)="onSubmit()" class="btn btn-success" data-dismiss="modal">SAVE</button>
+          <button routerLink="" type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>

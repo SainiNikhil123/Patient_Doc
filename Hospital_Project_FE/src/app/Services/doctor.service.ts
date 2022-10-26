@@ -15,4 +15,9 @@ export class DoctorService {
   {
     return this.httpClient.get<any>(this.BaseUrl);
   }
+
+  getRating(id:number):Observable<any>
+  {
+    return this.httpClient.get<any>(this.BaseUrl+"rating?id="+id);
+  }
 }

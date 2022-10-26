@@ -3,8 +3,8 @@
     <div class="card border-primary mb-3 p-1 m-1">
         <div class="card-header">
             <div class="row">
-            <div><b>ID:</b> {{patient.id}}</div>
-            <div class="offset-10"><b>APPOINTMENT ID:</b> {{patient.appointmentId}}</div>
+            <div><b>PATIENT ID:</b> {{patient.id}}</div>
+            <div class="offset-9"><b>APPOINTMENT ID:</b> {{patient.appointmentId}}</div>
         </div>
         <div class="row ">
             <div><b>Name: </b> {{patient.name}}</div>
@@ -18,9 +18,10 @@
                 <div class="offset-2"><b>DOCTOR:</b> {{patient.doctor}}</div>
                 
             </div>
-            <div class="offset-10"><b>REFER : </b>{{patient.referName}}</div>
-            <div class="offset-10">
+            <div class="offset-10"><b>REFER : </b>{{patient.doctors.docname}}</div>
+            <div  class="offset-10">
                 <button data-toggle="modal" data-target="#commentModal" (click)="commentClick(patient.id)" class="btn btn-primary p-1 m-1">COMMENTS</button>
+                <button data-toggle="modal" data-target="#referModal" (click)="referClick(patient)" class="btn btn-primary p-1 m-1">REFER</button>
             </div>
             
         </div>
@@ -41,14 +42,46 @@
             <div class="modal-body" *ngFor="let comment of comments">
                 <div>{{comment}}</div>
             </div>
-            <div class="p-2 m-2">
+            <div *ngIf="doctorRole() == true" class="p-2 m-2">
                 <input [(ngModel)]="newComments.comments" name="comment" type="text" class="form-control" placeholder="Add Comment Here" >
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button (click)="AddComment()" type="button" class="btn btn-primary" data-dismiss="modal">Add Comment</button>
+              <button *ngIf="doctorRole() == true" (click)="AddComment()" type="button" class="btn btn-primary" data-dismiss="modal">Add Comment</button>
             </div>
           </div>
         </div>
       </div>
+</form>
+
+<!-- refer -->
+<form>
+  <div class="modal fade" id="referModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel"><b>DOCTOR COMMENTS</b></h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <select (change)="onSelectDoc($event)"
+            class="form-control" >
+            <option value="">Select Doctor</option>
+          <option value="{{doc.id}}" *ngFor="let doc of DoctorsByDep">
+          <div class="row">
+            <div>{{doc.docname}}</div>
+        </div>
+          </option>
+        </select> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button *ngIf="doctorRole() == true" (click)="onSubmit()" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 </form>

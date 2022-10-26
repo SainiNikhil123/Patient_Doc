@@ -27,7 +27,8 @@ namespace Doc_Patient_Project.Repository
                                  DepartmentId = doc.DepartmentId,
                                  Department = doc.Department.Department1,
                                  DesignationId = docdes.DesignationId,
-                                 Designation = docdes.Designation.Name
+                                 Designation = docdes.Designation.Name,
+                                 Rating = doc.Rating
                              };
 
             if (DoctorList == null) return null;
@@ -40,8 +41,7 @@ namespace Doc_Patient_Project.Repository
             Doctor doc = new Doctor()
             {
                 Docname = doctor.Docname,
-                DepartmentId = doctor.DepartmentId,
-                Rating = doctor.Rating
+                DepartmentId = doctor.DepartmentId
             };
             _context.Doctors.Add(doc);
             _context.SaveChanges();
@@ -62,32 +62,73 @@ namespace Doc_Patient_Project.Repository
             var validoc = _context.Doctors.Find(doctor.Id);
             if (validoc == null) return false;
 
-            Doctor doc = new Doctor()
+
+            validoc.Docname = doctor.Docname;
+            validoc.DepartmentId = doctor.DepartmentId;
+            
+            _context.Doctors.Update(validoc);
+            _context.SaveChanges();
+
+            var olddesignation = _context.DoctorDesignations.FirstOrDefault(x => x.DoctorId == validoc.Id && x.DesignationId == doctor.oldDesId);
+
+            if (olddesignation != null)
             {
-                Id = doctor.Id,
-                Docname = doctor.Docname,
-                DepartmentId = doctor.DepartmentId,
-                Rating = doctor.Rating
-            };
-            _context.Doctors.Update(doc);
-            _context.SaveChanges();
+                _context.DoctorDesignations.Remove(olddesignation);
+                _context.SaveChanges();
+            }
 
-            var olddesignation = _context.DoctorDesignations.FirstOrDefault(x => x.DoctorId == doc.Id && x.DesignationId == doctor.oldDesId);
-
-            if (olddesignation == null) return false;
-
-            _context.DoctorDesignations.Remove(olddesignation);
-            _context.SaveChanges();
-
-            DoctorDesignation newDes = new DoctorDesignation()
+            if(doctor.oldDesId != doctor.DesignationId)
             {
-                DoctorId = doc.Id,
-                DesignationId = doctor.DesignationId
-            };
-            _context.DoctorDesignations.Add(newDes);
-            _context.SaveChanges();
+                DoctorDesignation newDes = new DoctorDesignation()
+                {
+                    DoctorId = validoc.Id,
+                    DesignationId = doctor.DesignationId
+                };
+                _context.DoctorDesignations.Add(newDes);
+                _context.SaveChanges();
+            }
+           
 
             return true;
+        }
+
+        public int DocRating(int docId)
+        {
+           var ratingCount = _context.DoctorRatings.Where(x => x.DoctorId == docId).Count();
+            var ratingSum = _context.DoctorRatings.Where(x => x.DoctorId == docId).Sum(x => x.Rating);
+            var rating = ratingSum / ratingCount;
+            return rating;
+        }
+
+        public bool AddRating(RatingDto rating)
+        {
+            try
+            {
+                DoctorRating docRAting = new DoctorRating()
+                {
+                    DoctorId = rating.DoctorId,
+                    PatientId = rating.PatientId,
+                    Rating = rating.Rating
+                };
+                _context.DoctorRatings.Add(docRAting);
+                _context.SaveChanges();
+
+                var ratingCount = _context.DoctorRatings.Where(x => x.DoctorId == docRAting.DoctorId).Count();
+                var ratingSum = _context.DoctorRatings.Where(x => x.DoctorId == docRAting.DoctorId).Sum(x => x.Rating);
+                var newRating = ratingSum / ratingCount;
+
+                var doc = _context.Doctors.FirstOrDefault(x => x.Id == docRAting.DoctorId);
+                doc.Rating = newRating;
+                _context.Doctors.Update(doc);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ;
+            }
+            
         }
     }
 }

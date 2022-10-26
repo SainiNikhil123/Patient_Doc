@@ -1,3 +1,5 @@
+import { Doctor } from "./doctor";
+
 export class Patient {
      id:number = 0;
      appointmentId:number=0;
@@ -12,5 +14,6 @@ export class Patient {
      comments:any
      refer:number=0
      referName:string=""
-     userId:string=""
+     userId:any=""
+     doctors:Doctor= new Doctor();
 }

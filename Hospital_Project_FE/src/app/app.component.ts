@@ -10,20 +10,26 @@ export class AppComponent {
   title = 'Hospital_Project_FE';
 
   UserName:any="";
-  dispComp:boolean = false;
-  dispUser:boolean = false;
+  receptionRole:boolean=false;
+  doctorRole:boolean=false;
+  adminRole:boolean = false;
 
   constructor(private router:Router) {}
 
   ngOnInit(): void {
     this.UserName;
+    
+  }
+
+  ngDoCheck():void{
+
+    this.MenuDisplay();
+
   }
 
   Logout()
 {
   localStorage.removeItem("jwt");
-  // localStorage.removeItem("EditRole");
-  // localStorage.removeItem("DeleteRole");
   localStorage.removeItem("Id");
   localStorage.removeItem("role");
   this.router.navigate(['']);
@@ -39,7 +45,6 @@ isAuthorized()
       let decodeJsonData = window.atob(tokenData)
       let decodeTokenData = JSON.parse(decodeJsonData)
       this.UserName = decodeTokenData.unique_name;
-      //console.log( this.UserName)
       return true;
     }
     else
@@ -47,4 +52,13 @@ isAuthorized()
       return false;
     }  
 }
+
+MenuDisplay()
+{
+ let role = localStorage.getItem("role")
+ this.adminRole = (role == "Admin");
+ this.doctorRole = (role == "Doctor");
+ this.receptionRole = (role == "Reception")
+}
+
 }

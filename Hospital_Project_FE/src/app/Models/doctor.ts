@@ -7,4 +7,5 @@ export class Doctor {
     oldDesId:number=0;
     designation:string=""
     rating:number=0;
+    
 }

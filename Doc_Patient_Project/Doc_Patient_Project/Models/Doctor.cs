@@ -11,6 +11,7 @@ namespace Doc_Patient_Project.Models
         {
             AppointmentRegistrations = new HashSet<AppointmentRegistration>();
             DoctorDesignations = new HashSet<DoctorDesignation>();
+            DoctorRatings = new HashSet<DoctorRating>();
             PatientDoctors = new HashSet<Patient>();
             PatientReferNavigations = new HashSet<Patient>();
         }
@@ -23,6 +24,7 @@ namespace Doc_Patient_Project.Models
         public virtual Department Department { get; set; }
         public virtual ICollection<AppointmentRegistration> AppointmentRegistrations { get; set; }
         public virtual ICollection<DoctorDesignation> DoctorDesignations { get; set; }
+        public virtual ICollection<DoctorRating> DoctorRatings { get; set; }
         public virtual ICollection<Patient> PatientDoctors { get; set; }
         public virtual ICollection<Patient> PatientReferNavigations { get; set; }
     }

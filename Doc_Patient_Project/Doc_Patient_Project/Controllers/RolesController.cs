@@ -1,4 +1,5 @@
 ﻿using Doc_Patient_Project.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Doc_Patient_Project.Controllers
 {
     [Route("api/Roles")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly Hospital_ProjectContext _context;

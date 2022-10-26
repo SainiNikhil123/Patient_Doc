@@ -2,6 +2,7 @@
 using Doc_Patient_Project.Models;
 using Doc_Patient_Project.Models.DTO;
 using Doc_Patient_Project.Repository.iRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ namespace Doc_Patient_Project.Controllers
 {
     [Route("api/Doctor")]
     [ApiController]
+    
     public class DoctorController : ControllerBase
     {
         private readonly iUnitOfWork _unitOfWork;
@@ -24,6 +26,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult GetDoctors()
         {
             var DoctorList = _unitOfWork.Doctor.GetAllDoctors();
@@ -32,6 +35,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetDoctorById(int id)
         {
             var Doctor = _unitOfWork.Doctor.Get(id);
@@ -40,6 +44,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Reception)]
         public IActionResult AddDoctor(DoctorDto doctor)
         {
             if(doctor != null && ModelState.IsValid)
@@ -52,6 +57,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Reception)]
         public IActionResult DeleteDoctor(int id)
         {
             // if (id == 0) return BadRequest();
@@ -62,6 +68,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Reception)]
         public IActionResult UpdateDoctor(DoctorDto doctor)
         {
             if(doctor != null && ModelState.IsValid)
@@ -72,6 +79,22 @@ namespace Doc_Patient_Project.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+        [HttpGet("rating")]
+        [Authorize]
+        public IActionResult GetRating(int id)
+        {
+            var rating = _unitOfWork.Doctor.DocRating(id);
+            return Ok(rating);
+        }
+
+        [HttpPost("rating")]
+        public IActionResult AddRating(RatingDto rating)
+        {
+            if (rating == null) return BadRequest();
+            var docNewRating = _unitOfWork.Doctor.AddRating(rating);
+            if (docNewRating != true) return BadRequest();
+            return Ok();
         }
 
     }

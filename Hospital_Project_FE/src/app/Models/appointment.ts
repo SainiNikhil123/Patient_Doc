@@ -1,3 +1,5 @@
+import { EmptyError } from 'rxjs';
+import { Doctor } from './doctor';
 export class Appointment {
     userId:any;
     id:number;
@@ -11,6 +13,7 @@ export class Appointment {
     appointmentDate:any;
     appointmentTimes:number;
     time:string;
+   
 
     constructor(){
         this.userId="";
@@ -25,5 +28,6 @@ export class Appointment {
         this.appointmentDate="";
         this.appointmentTimes=0;
         this.time="";
+        
     }
 }

@@ -76,3 +76,10 @@ INSERT INTO AppointmentTime (Name) VALUES('04:00PM - 04:30PM')
 INSERT INTO AppointmentTime (Name) VALUES('04:30PM - 05:00PM')
 
 select * From AspNetUsers
+
+CREATE TABLE DoctorRatings( Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+                            DoctorId INT NOT NULL FOREIGN KEY REFERENCES Doctors(Id),
+							PatientId INT NOT NULL FOREIGN KEY REFERENCES Patient(Id),
+							Rating INT NOT NULL);
+
+ALTER TABLE Doctors DROP COLUMN Rating

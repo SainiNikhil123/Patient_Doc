@@ -37,4 +37,9 @@ export class PatientService {
   {
     return this.httpClient.get<any>(this.BaseUrl+"Id?Id="+id)
   }
+
+  postRefer(id:number,docId:number):Observable<any>
+  {
+    return this.httpClient.post<any>(this.BaseUrl+"refer?id=",id+"&docId="+docId);
+  }
 }

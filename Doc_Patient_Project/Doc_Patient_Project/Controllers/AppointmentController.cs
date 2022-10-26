@@ -2,6 +2,7 @@
 using Doc_Patient_Project.Models;
 using Doc_Patient_Project.Models.DTO;
 using Doc_Patient_Project.Repository.iRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,6 +25,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Admin+","+SD.Role_Reception)]
         public IActionResult GetAllAppointment()
         {
             var List = _unitOfWork.Appointment.GetAllAppointment();
@@ -32,6 +34,7 @@ namespace Doc_Patient_Project.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetAppointmentById(int id)
         {
             var appointment = _unitOfWork.Appointment.Get(id);
@@ -39,6 +42,7 @@ namespace Doc_Patient_Project.Controllers
             return Ok(appointment);
         }
         [HttpGet("user/{userId}")]
+        [Authorize]
         public IActionResult GetByUserId(string userId)
         {
             var appointment = _unitOfWork.Appointment.GetById(userId);
@@ -46,6 +50,7 @@ namespace Doc_Patient_Project.Controllers
             return Ok(appointment);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult AddAppointment(AppointmentRegisterDto appointment)
         {
             try
