@@ -10,7 +10,7 @@ export class Patient {
      department:string=""
      doctorId:number=0;
      doctor:string="" 
-     status:string =""
+     status:any =""
      comments:any
      refer:number=0
      referName:string=""

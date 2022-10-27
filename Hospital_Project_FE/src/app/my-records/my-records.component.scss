@@ -1,3 +1,17 @@
 .dep{
     padding: 0 0 0 80%;
 }
+
+.rating{
+    display: flex;
+    gap: 5px;
+}
+
+i{
+    color: gray;
+    cursor: pointer;
+}
+
+.active{
+    color: orange;
+}

@@ -26,14 +26,25 @@ export class PatientComponent implements OnInit {
   ngOnInit(): void {
     this.getAllPatient();
     this.getAllDoc();
-    //this.commentClick(0);
+    
+  }
+  ngDoCheck():void{
+
+    this.DoctorsByDep;
+
   }
 
   getAllPatient()
   {
+    debugger;
     this.patientService.getPatients().subscribe(
       (response)=>{
         this.PatientList = response;
+        this.PatientList.forEach(X => {
+          X.doctors.docname == null ? X.referName = "NOT REFERED" : X.referName = X.doctors.docname
+          console.log(X.doctors.docname);
+        });
+        
         console.log(response);
       },
       (error)=>{
@@ -95,13 +106,14 @@ referClick(e:any)
 {
   debugger;
   this.patient = e;
-  this.DoctorsByDep = this.AllDoctors.filter(x=>x.departmentId == this.patient.departmentId);
+  this.DoctorsByDep = this.AllDoctors.filter(x=>x.departmentId == this.patient.departmentId && x.designationId == 3);
   console.log(this.DoctorsByDep);
 }
 
 onSelectDoc(e:any)
 {
   this.patient.doctorId = e.target.value;
+  console.log(this.patient.doctorId);
   
 }
 

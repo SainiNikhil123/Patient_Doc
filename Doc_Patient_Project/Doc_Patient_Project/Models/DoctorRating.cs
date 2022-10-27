@@ -11,7 +11,6 @@ namespace Doc_Patient_Project.Models
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
         public int Rating { get; set; }
-
         public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
     }

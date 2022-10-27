@@ -14,15 +14,15 @@
         <a class="nav-link" routerLink="patient" >Patients</a>
       </li> 
       <li  class="nav-item">
-        <a class="nav-link" routerLink="myrecords" >My Records</a>
+        <a *ngIf="patientRole == true" class="nav-link" routerLink="myrecords" >My Records</a>
       </li>
       <li *ngIf="receptionRole == true || adminRole == true" class="nav-item">
         <a class="nav-link" routerLink="appointment" >Appointments</a>
       </li>
-      <li  class="nav-item">
+      <li  *ngIf="patientRole == true" class="nav-item">
         <a class="nav-link" routerLink="myappointment" >My Appointments</a>
       </li>
-      <li  class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" routerLink="newappointment" >New Appointments</a>
       </li>
       <li *ngIf="receptionRole == true || adminRole == true" class="nav-item">
@@ -42,3 +42,6 @@
 </nav>
 
 <router-outlet></router-outlet>
+<div class="text-center p-5 m-5">
+  <img src="../assets/IMAGES/123.jpg">
+</div>

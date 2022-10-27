@@ -1,3 +1,4 @@
+import { Docrating } from './../Models/docrating';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -19,5 +20,10 @@ export class DoctorService {
   getRating(id:number):Observable<any>
   {
     return this.httpClient.get<any>(this.BaseUrl+"rating?id="+id);
+  }
+
+  postNewRating(rating:Docrating):Observable<any>
+  {
+    return this.httpClient.post<any>(this.BaseUrl+"rating",rating);
   }
 }

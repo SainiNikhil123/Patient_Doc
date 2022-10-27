@@ -4,6 +4,7 @@
     <div class="card border-primary mb-3" style="max-width: 18rem;">
       <div class="card-header text-primary">{{item.appointmentDate|date}} : {{item.time}}</div>
       <div class="card-body text-dark">
+        <h3 class="card-title"><b>Appointment Id :-</b>{{item.id}}</h3>
         <h4 class="card-title"><b>Patient Name :-</b> {{item.patientName}}</h4>
         <h4 class="card-title"><b>Address :- </b>{{item.address}}</h4>
         <h4 class="card-title"><b>Department :- </b>{{item.department}}</h4>
@@ -60,7 +61,7 @@
           <div class="form-group row">
             <label for="txtdes" class="col-sm-4">Department</label>
             <div class="col-sm-8">
-              <select (change)="onSelectDep($event)" [(ngModel)]="patient.departmentId" name="patient.departmentId" class="form-control">
+              <select (change)="onSelectDep($event)" class="form-control">
                 <option value="">Select Department</option>
                 <option  value="{{Dep.id}}"   *ngFor="let Dep of DepartmentList">
                   {{Dep.department1}}
@@ -75,7 +76,7 @@
             <div class="form-group row">
               <label for="txtdes" class="col-sm-4">Doctor</label>
               <div class="col-sm-8">
-                <select (change)="onSelectDoc($event)" [(ngModel)]="patient.doctorId" name="patient.doctorId" class="form-control">
+                <select (change)="onSelectDoc($event)" class="form-control">
                   <option value="">Select Doctor</option>
                   <option value="{{Doc.id}}"  *ngFor="let Doc of DoctorsByDep">
                     {{Doc.docname}}

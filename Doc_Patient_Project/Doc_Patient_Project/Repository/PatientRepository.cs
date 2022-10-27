@@ -66,7 +66,7 @@ namespace Doc_Patient_Project.Repository
             return PatientList;
         }
 
-        public bool NewPatient(PatientDto patient)
+        public bool NewPatient(NewPatient patient)
         {
             try
             {

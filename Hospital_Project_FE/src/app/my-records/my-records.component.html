@@ -18,8 +18,15 @@
                 <div class="offset-2"><b>DOCTOR:</b> {{patient.doctor}}</div>
                 <div class="offset-2"><b>STATUS:</b> {{patient.status}}</div>
             </div>
-            <div class="p-1 m-1"><b>Rate Your Doctor:</b><div><i class="fa fa-star"></i></div></div>
-            <div class="offset-10"><b>REFER : </b>{{patient.doctors.docname}}</div>
+            <div class="row p-1 m-1">
+              <div class="row rating">
+                <div><b>Rate Your Doctor : </b></div>
+                <ng-container *ngFor="let i of stars">
+                   <i class='fa fa-star' (click)="updateRating(i,patient)" [ngClass]="{ 'active' : i <= rating }"></i>
+                </ng-container>
+              </div>
+            </div>
+            <div class="offset-10"><b>REFER : </b>{{patient.referName}}</div>
             <div class="offset-10">
                 <button data-toggle="modal" data-target="#commentModal" (click)="commentClick(patient.id)" class="btn btn-primary p-1 m-1">COMMENTS</button>
             </div>

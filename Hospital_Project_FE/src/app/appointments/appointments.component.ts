@@ -1,3 +1,4 @@
+import { NewPatient } from './../Models/new-patient';
 import { Patient } from './../Models/patient';
 import { AppointmentService } from './../Services/appointment.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +8,7 @@ import { Department } from '../Models/department';
 import { PatientService } from '../Services/patient.service';
 import { DepartmentService } from '../Services/department.service';
 import { DoctorService } from '../Services/doctor.service';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-appointments',
@@ -15,7 +17,7 @@ import { DoctorService } from '../Services/doctor.service';
 })
 export class AppointmentsComponent implements OnInit {
 
-  patient:Patient=new Patient();
+  patient:NewPatient=new NewPatient();
   AllDoctors:Doctor[]=[];
   DoctorsByDep:Doctor[]=[];
   DepartmentList:Department[]=[];
@@ -28,6 +30,8 @@ export class AppointmentsComponent implements OnInit {
     this.get();
     this.getAllDep();
     this.getAllDoc();
+    this.onSelectDep(0);
+    this.onSelectDoc(0);
    
   }
 
@@ -45,17 +49,24 @@ export class AppointmentsComponent implements OnInit {
 
   AddPatients(appointment:Appointment)
   {
+    this.patient.userId = appointment.userId;
     this.patient.address = appointment.address;
     this.patient.appointmentId = appointment.id;
     this.patient.phoneNumber = appointment.phoneNumber;
     this.patient.name = appointment.patientName;
     this.patient.departmentId = appointment.departmentId;
-    this.patient.doctorId = appointment.doctorId;
   }
 
   onSubmit()
   {
-
+    this.patientService.postPatient(this.patient).subscribe(
+      (response)=>{
+        console.log(response);
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
   }
 
   getAllDoc()

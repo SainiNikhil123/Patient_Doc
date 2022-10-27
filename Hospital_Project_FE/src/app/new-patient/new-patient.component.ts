@@ -1,3 +1,4 @@
+import { NewPatient } from './../Models/new-patient';
 import { DoctorService } from './../Services/doctor.service';
 import { DepartmentService } from './../Services/department.service';
 import { Patient } from './../Models/patient';
@@ -14,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class NewPatientComponent implements OnInit {
 
-  newPatient:Patient=new Patient();
+  newPatient:NewPatient=new NewPatient();
   AllDoctors:Doctor[]=[];
   DoctorsByDep:Doctor[]=[];
   DepartmentList:Department[]=[];

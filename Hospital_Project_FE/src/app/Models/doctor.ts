@@ -3,7 +3,7 @@ export class Doctor {
     docname:string="";
     departmentId:number=0;
     department:string="";
-    designationId:string="";
+    designationId:number=0;
     oldDesId:number=0;
     designation:string=""
     rating:number=0;

@@ -1,6 +1,8 @@
 import { PatientService } from './../Services/patient.service';
 import { Patient } from './../Models/patient';
 import { Component, OnInit } from '@angular/core';
+import { Docrating } from '../Models/docrating';
+import { DoctorService } from '../Services/doctor.service';
 
 @Component({
   selector: 'app-my-records',
@@ -9,10 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyRecordsComponent implements OnInit {
 
-  MYPatientList:Patient[]=[];
-  comments:any[]=[];
+  MYPatientList:Patient[] = [];
+  comments:any[] = [];
+  rating:number = 0;
+  stars:number[] = [1, 2, 3, 4, 5];
+  newRating: Docrating = new Docrating();
 
-  constructor(private service:PatientService, private patientService:PatientService) { }
+  constructor(private service:PatientService, private patientService:PatientService, private docService:DoctorService) { }
 
   ngOnInit(): void {
     this.getPatients();
@@ -24,6 +29,10 @@ export class MyRecordsComponent implements OnInit {
     this.service.getPatientByUserId(id).subscribe(
       (response)=>{
         this.MYPatientList = response;
+        this.MYPatientList.forEach(X => {
+          X.doctors.docname == null ? X.referName = "NOT REFERED" : X.referName = X.doctors.docname
+          console.log(X.doctors.docname);
+        });
         console.log(this.MYPatientList)
       },
       (error)=>{
@@ -47,4 +56,19 @@ export class MyRecordsComponent implements OnInit {
 
   }
 
+  updateRating(i:number,patient:Patient)
+  { 
+    this.rating = i
+    this.newRating.patientId = patient.id;
+    this.newRating.doctorId = patient.doctorId;
+    this.newRating.rating = this.rating
+    this.docService.postNewRating(this.newRating).subscribe(
+      (response)=>{
+        console.log(response);
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
 }

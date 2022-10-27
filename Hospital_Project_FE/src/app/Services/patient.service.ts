@@ -1,3 +1,4 @@
+import { NewPatient } from './../Models/new-patient';
 import { Comment } from './../Models/comment';
 import { Patient } from './../Models/patient';
 import { Observable } from 'rxjs/internal/Observable';
@@ -18,7 +19,7 @@ export class PatientService {
     return this.httpClient.get<any>(this.BaseUrl);
   }
 
-  postPatient(newPatient:Patient):Observable<Patient>
+  postPatient(newPatient:NewPatient):Observable<Patient>
   {
     return this.httpClient.post<Patient>(this.BaseUrl,newPatient)
   }
@@ -40,6 +41,6 @@ export class PatientService {
 
   postRefer(id:number,docId:number):Observable<any>
   {
-    return this.httpClient.post<any>(this.BaseUrl+"refer?id=",id+"&docId="+docId);
+    return this.httpClient.post<any>(this.BaseUrl+"refer?id="+id+"&docId=",docId);
   }
 }

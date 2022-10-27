@@ -125,8 +125,7 @@ namespace Doc_Patient_Project.Repository
             }
             catch (Exception ex)
             {
-
-                throw ;
+                return false;
             }
             
         }

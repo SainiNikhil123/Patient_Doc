@@ -48,7 +48,7 @@ namespace Doc_Patient_Project.Controllers
 
         [HttpPost]
         [Authorize(Roles =SD.Role_Reception)]
-        public IActionResult AddPatient([FromBody]PatientDto patient)
+        public IActionResult AddPatient([FromBody]NewPatient patient)
         {
             var newPatient = _context.Patient.NewPatient(patient);
             if (newPatient == false) return BadRequest();

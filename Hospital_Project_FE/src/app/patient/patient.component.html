@@ -18,7 +18,7 @@
                 <div class="offset-2"><b>DOCTOR:</b> {{patient.doctor}}</div>
                 
             </div>
-            <div class="offset-10"><b>REFER : </b>{{patient.doctors.docname}}</div>
+            <div class="offset-10"><b>REFER : </b>{{patient.referName}}</div>
             <div  class="offset-10">
                 <button data-toggle="modal" data-target="#commentModal" (click)="commentClick(patient.id)" class="btn btn-primary p-1 m-1">COMMENTS</button>
                 <button data-toggle="modal" data-target="#referModal" (click)="referClick(patient)" class="btn btn-primary p-1 m-1">REFER</button>
@@ -54,6 +54,7 @@
       </div>
 </form>
 
+
 <!-- refer -->
 <form>
   <div class="modal fade" id="referModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,8 +70,8 @@
             <select (change)="onSelectDoc($event)"
             class="form-control" >
             <option value="">Select Doctor</option>
-          <option value="{{doc.id}}" *ngFor="let doc of DoctorsByDep">
-          <div class="row">
+          <option [value]="doc.id" *ngFor="let doc of DoctorsByDep">
+          <div>
             <div>{{doc.docname}}</div>
         </div>
           </option>
@@ -78,7 +79,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button *ngIf="doctorRole() == true" (click)="onSubmit()" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+            <button (click)="onSubmit()" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
           </div>
           
         </div>

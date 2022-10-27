@@ -11,7 +11,7 @@ namespace Doc_Patient_Project.Repository.iRepository
     {
         ICollection<PatientDto> GetPatients();
         List<String> GetCommentByID(int id);
-        bool NewPatient(PatientDto patient);
+        bool NewPatient(NewPatient patient);
         bool AddComment(CommentDto comment);
         List<PatientDto> GetPatientByUID(string Id); 
     }

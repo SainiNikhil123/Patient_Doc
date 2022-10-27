@@ -13,6 +13,7 @@ export class AppComponent {
   receptionRole:boolean=false;
   doctorRole:boolean=false;
   adminRole:boolean = false;
+  patientRole:boolean = false;
 
   constructor(private router:Router) {}
 
@@ -59,6 +60,7 @@ MenuDisplay()
  this.adminRole = (role == "Admin");
  this.doctorRole = (role == "Doctor");
  this.receptionRole = (role == "Reception")
+ this.patientRole = (role == "Patient")
 }
 
 }
