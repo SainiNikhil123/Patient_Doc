@@ -1,5 +1,4 @@
 import { NewPatient } from './../Models/new-patient';
-import { Patient } from './../Models/patient';
 import { AppointmentService } from './../Services/appointment.service';
 import { Component, OnInit } from '@angular/core';
 import { Appointment } from '../Models/appointment';
@@ -8,7 +7,7 @@ import { Department } from '../Models/department';
 import { PatientService } from '../Services/patient.service';
 import { DepartmentService } from '../Services/department.service';
 import { DoctorService } from '../Services/doctor.service';
-import { empty } from 'rxjs';
+
 
 @Component({
   selector: 'app-appointments',

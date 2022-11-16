@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Doc_Patient_Project.Models.DTO
 {
-    [NotMapped]
+   
     public class UserDto
     {
         public string Id { get; set; }
@@ -16,6 +16,5 @@ namespace Doc_Patient_Project.Models.DTO
         public string Email { get; set; }
         public string RoleId { get; set; }
         public string Role { get; set; }
-       
     }
 }

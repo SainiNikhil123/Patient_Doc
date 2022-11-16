@@ -29,9 +29,7 @@ export class PatientComponent implements OnInit {
     
   }
   ngDoCheck():void{
-
     this.DoctorsByDep;
-
   }
 
   getAllPatient()
